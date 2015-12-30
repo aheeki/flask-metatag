@@ -31,4 +31,4 @@ api = Api(app)
 api.add_resource(MetaTagAPI, "/tags")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
