@@ -1,22 +1,34 @@
-from flask import Flask, jsonify
-from flask.ext.restful import Api, Resource
+from flask import Flask, jsonify, request
+from flask_restful import Api, Resource, reqparse
 from newspaper import Article
 
 app = Flask(__name__)
 
-class metatagAPI(Resource):
-    data = []
-    def get(self, id):
-        pass
+class MetaTagAPI(Resource):
+    def post(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('url', type=str, help='url to scrape')
+            data = parser.parse_args()
+            url = data['url']
+            tags = {}
 
-    def put(self, id):
-        pass
+            art = Article(url)
+            art.download()
+            art.parse()
 
-    def delete(self, id):
-        pass
+            if art.title:
+                tags['title'] = art.title
+
+            if art.top_image:
+                tags['image'] = art.top_image
+
+            return jsonify({"response":tags})
+        except Exception as e:
+            return jsonify({"response": "error"})
 
 api = Api(app)
-api.add_resource(UserAPI, '/api/<string:url>')
+api.add_resource(MetaTagAPI, "/tags")
 
 if __name__ == "__main__":
     app.run(debug=True)
