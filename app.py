@@ -23,6 +23,12 @@ class MetaTagAPI(Resource):
             if art.top_image:
                 tags['image'] = art.top_image
 
+            if art.images:
+                tags['images'] = art.images
+
+            # if art.description:
+            #     tags['description'] = art.description            
+
             return jsonify({"response":tags})
         except Exception as e:
             return jsonify({"response": "error"})
