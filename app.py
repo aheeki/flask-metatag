@@ -23,18 +23,34 @@ class MetaTagAPI(Resource):
             if art.top_image:
                 tags['image'] = art.top_image
 
-            if art.images:
-                tags['images'] = art.images
+            # Throwing a "Not JSON Serializable"
+            # if art.images:
+            #     tags['images'] = art.images
 
             # if art.description:
             #     tags['description'] = art.description            
-
-            return jsonify({"response":tags})
+            response = jsonify(tags)
+            print('resp in class')
+            print(response)
+            return response
         except Exception as e:
-            return jsonify({"response": "error"})
+            print('\n', 'error type:', '\n', type(e))
+            print('\n', 'error args:', '\n', e.args)
+            print('\n', 'error:', '\n', e)
+            response = jsonify({"response": "error"})
+            return response
 
 api = Api(app)
 api.add_resource(MetaTagAPI, "/tags")
 
+@app.after_request
+def after_request(response):
+  response.headers['Access-Control-Allow-Origin'] = '*'
+  response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+  response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE'
+  print('resp in after_request')
+  print(response)  
+  return response
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
