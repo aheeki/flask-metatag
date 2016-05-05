@@ -1,0 +1,6 @@
+app:
+  restart: always
+  build: .
+  ports:
+    - "80:5000"
+  command: python app.py

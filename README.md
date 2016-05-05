@@ -1,11 +1,19 @@
 # flask-metatag
-flask restful API to scrape article meta tags
+flask-restful API to scrape meta tags
 
-## To call:
-make a POST request to http://127.0.0.1:5000/tags with the url parameter
+### install
+pip install flask flask-restful newspaper3k
 
-## curl example:
-`curl http://127.0.0.1:5000/tags -d "url=https://www.myurl.com" -X POST`
+### use
+POST to http://127.0.0.1:5000/tags with url data parameter
 
-## Python version
+### example
+`curl http://127.0.0.1:5000/tags -d "url=http://www.mtv.com/artists/rick-astley/" -X POST`
+
+### docker
+`docker-compose build`
+`docker-compose up -d`
+`curl http://[machine ip]/tags -d "url=http://www.mtv.com/artists/rick-astley/" -X POST`
+
+### python
 3.4
