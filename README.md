@@ -12,7 +12,9 @@ POST to http://127.0.0.1:5000/tags with url data parameter
 
 ### docker
 `docker-compose build`
+
 `docker-compose up -d`
+
 `curl http://[machine ip]/tags -d "url=http://www.mtv.com/artists/rick-astley/" -X POST`
 
 ### python
